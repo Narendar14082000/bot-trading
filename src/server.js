@@ -1,20 +1,29 @@
 // src/server.js
 const express = require('express');
-const { executeTrade } = require('./bot');
+const { monitorStockPrice, executeTrade,generateSummaryReport } = require('./bot');
+const { fetchStockPrice } = require('./api');
+
 
 const app = express();
 const PORT = 3000;
 
+// API endpoint to get the latest stock price
+app.get('/stock-price', async (req, res) => {
+  const stockData = await fetchStockPrice();
+  res.json(stockData); // Return structured price data
+});
+app.get('/summary', (req, res) => {
+    const summary = generateSummaryReport();
+    res.json(summary);
+  });
 // API endpoint to get bot status and trade history
-app.get('/bot-status', (req, res) => {
-  const report = executeTrade();
+app.get('/bot-status', async (req, res) => {
+  const report = await executeTrade();
   res.json(report);
 });
 
-// Run the bot every 5 seconds
-setInterval(() => {
-  executeTrade();
-}, 5000);
+// Start monitoring the stock price
+monitorStockPrice(); // Start the bot's price monitoring and trading decisions
 
 // Start the Express server
 app.listen(PORT, () => {
