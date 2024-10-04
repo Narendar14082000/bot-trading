@@ -64,18 +64,16 @@ node src/server.js
 
 The server will start and listen for requests on `http://localhost:3000`.
 
-## API Endpoints
+## Live API Endpoints
 
-### 1. Start Monitoring Stock Prices
+You can interact with the trading bot using the following live API endpoints:
 
-The bot starts monitoring stock prices automatically when the server is started. It will execute trades based on the defined strategies every 5 seconds.
-
-### 2. Check Bot Status
+### 1. Bot Status
 
 To view the current status of the trading bot, including balance, shares held, and current stock price, use the following endpoint:
 
 ```http
-GET /bot-status
+GET https://bot-trading-b56q.onrender.com/bot-status
 ```
 
 **Response:**
@@ -96,12 +94,12 @@ GET /bot-status
 }
 ```
 
-### 3. Generate Summary Report
+### 2. Summary Report
 
 To generate a summary report showing the total trades, final balance, and overall profit/loss, use the following endpoint:
 
 ```http
-GET /summary
+GET https://bot-trading-b56q.onrender.com/summary
 ```
 
 **Response:**
@@ -118,6 +116,22 @@ GET /summary
     },
     ...
   ]
+}
+```
+
+### 3. Stock Price
+
+To get the latest stock prices, use the following endpoint:
+
+```http
+GET https://bot-trading-b56q.onrender.com/stock-price
+```
+
+**Response:**
+```json
+{
+  "price": "xx.xx",
+  "timestamp": "YYYY-MM-DDTHH:MM:SSZ"
 }
 ```
 
